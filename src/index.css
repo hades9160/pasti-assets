@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens — KLMS family, dark charcoal edition.
+   Same brand blue/teal, Inter, 14px radius and navy gradient sidebar as
+   KLMS (klms/assets/css/style.css), on charcoal surfaces.
+   ========================================================================== */
+@theme {
+  --font-sans: 'Inter', 'Segoe UI', Roboto, Arial, sans-serif;
+
+  --color-bg: #0f1115;            /* page */
+  --color-surface: #171a21;       /* cards, tables */
+  --color-surface-2: #1e222b;     /* inputs, hover rows, table head */
+  --color-surface-3: #262b36;     /* pressed / selected */
+  --color-line: #2a2f3b;          /* borders */
+  --color-line-strong: #3a4150;
+  --color-ink: #e7e9ef;           /* main text */
+  --color-ink-2: #b4bac8;         /* secondary text */
+  --color-muted: #8a92a6;         /* hints, labels */
+
+  --color-primary: #4c7bf0;       /* KLMS --primary #2653d6, lifted for dark */
+  --color-primary-strong: #3a68dc;
+  --color-primary-soft: #4c7bf01f;
+  --color-accent: #2cc9b6;        /* KLMS --accent #17b8a6 */
+  --color-navy-900: #0b1230;      /* KLMS --primary-darker, sidebar */
+  --color-navy-800: #121c45;
+
+  --color-ok: #34c17b;
+  --color-ok-soft: #34c17b1f;
+  --color-warn: #e8a93c;
+  --color-warn-soft: #e8a93c1f;
+  --color-danger: #f0605a;
+  --color-danger-soft: #f0605a1f;
+  --color-info: #6aa2ff;
+  --color-info-soft: #6aa2ff1f;
+
+  --radius-card: 14px;
+  --radius-ctl: 9px;
+  --shadow-card: 0 1px 0 #ffffff08 inset, 0 8px 24px #00000040;
+}
+
+@layer base {
+  html { color-scheme: dark; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
+  ::selection { background: #4c7bf055; }
+  input[type='date']::-webkit-calendar-picker-indicator,
+  input[type='time']::-webkit-calendar-picker-indicator { filter: invert(0.8); cursor: pointer; }
+  table { font-variant-numeric: tabular-nums; }
+}
+
+@layer components {
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+  .ctl {
+    width: 100%;
+    min-height: 2.5rem;
+    padding: 0 0.75rem;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-ctl);
+    color: var(--color-ink);
+    font-size: 0.875rem;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  textarea.ctl { padding: 0.55rem 0.75rem; min-height: 4.5rem; resize: vertical; }
+  .ctl::placeholder { color: var(--color-muted); }
+  .ctl:hover { border-color: var(--color-line-strong); }
+  .ctl:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-primary-soft); }
+  .ctl[aria-invalid='true'] { border-color: var(--color-danger); }
+  .ctl:disabled { opacity: 0.6; cursor: not-allowed; }
+  select.ctl {
+    appearance: none;
+    cursor: pointer;
+    padding-right: 2rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a92a6' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.7rem center;
+  }
+  .code { font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; font-size: 12.5px; letter-spacing: -0.01em; white-space: nowrap; }
+}
+
+/* Printable accountability form: white paper, no app chrome. */
+.print-only { display: none; }
+@media print {
+  @page { size: A4 portrait; margin: 12mm; }
+  html, body { background: #fff !important; color: #000 !important; color-scheme: light; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+}
